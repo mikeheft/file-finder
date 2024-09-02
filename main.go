@@ -18,7 +18,8 @@ func main() {
 		return
 	}
 
-	var names []byte
+	total := len(files) * 256
+	names := make([]byte, 0, total)
 
 	for _, file := range files {
 		info, e := file.Info()
