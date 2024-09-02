@@ -18,6 +18,8 @@ func main() {
 		return
 	}
 
+	var names []byte
+
 	for _, file := range files {
 		info, e := file.Info()
 		if e != nil {
@@ -26,7 +28,16 @@ func main() {
 		}
 		if info.Size() == 0 {
 			name := file.Name()
-			fmt.Println(name)
+			names = append(names, name...)
+			names = append(names, '\n')
 		}
 	}
+
+	e := os.WriteFile("out.txt", names, 0644)
+	if e != nil {
+		fmt.Println(e)
+		return
+	}
+
+	fmt.Printf("%s\n", names)
 }
