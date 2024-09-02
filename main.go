@@ -18,7 +18,19 @@ func main() {
 		return
 	}
 
-	total := len(files) * 256
+	var total int
+
+	for _, file := range files {
+		info, e := file.Info()
+		if e != nil {
+			fmt.Println(e)
+			return
+		}
+		if info.Size() == 0 {
+			total += len(file.Name()) + 1
+		}
+	}
+
 	names := make([]byte, 0, total)
 
 	for _, file := range files {
